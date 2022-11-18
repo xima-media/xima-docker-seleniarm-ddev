@@ -1,0 +1,20 @@
+version: '3.6'
+
+services:
+  selenium:
+    container_name: ddev-${DDEV_SITENAME}-selenium
+    image: maikschneider/seleniarm-ddev:latest
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - ddev-global-cache:/mnt/ddev-global-cache
+    expose:
+      - "7900"
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=4444,7900
+    external_links:
+      - ddev-router:$DDEV_HOSTNAME
+      # - ddev-router:alias.ddev.site
+      # - ddev-router:alias2.ddev.site
